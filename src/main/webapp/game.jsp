@@ -88,8 +88,7 @@
             </br>
             Player 2: <c:out value="${game.player2}"/>
             </br>
-            <div id="gameStatus"></div>
-            </br>
+            Result: <c:out value="${result}"/>
 
 
             <div class="starter-template col-lg-6 col-lg-offset-5 text-center">
@@ -139,23 +138,15 @@
         var fieldNumber = $(this).attr('id');
 
         $.get("/move", {cell: fieldNumber}).done(function () {
-            reload();
+            $('#form').submit();
         });
     });
 </script>
 
 <script>
-    function reload() {
-        $('#form').submit();
-    }
-</script>
-
-<script>
-
     setInterval(function () {
-            reload()
-    }, 10000);
-
+        $('#form').submit();
+    }, 5000);
 </script>
 
 </body>

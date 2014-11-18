@@ -5,40 +5,42 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class GameMoveServlet extends HttpServlet {
-    private int game_id;
     private String player;
-    private String result;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
+        Game game = (Game) request.getSession().getAttribute("game");
+        System.out.println("GameMoveServlet");
+        int game_id = game.getGame_id();
+
+        String result = "in progress";
+
         GameDaoImpl gameDao = new GameDaoImpl();
-        Game game = gameDao.getAll().get(game_id - 1);
-        String gameStatus = game.getGameStatus();
+        Game game1 = gameDao.getById(game_id);
 
-        request.getSession().setAttribute("gameStatus", gameStatus);
-        request.getSession().setAttribute("game", game);
+        System.out.println(game1 == null);
 
-
-        switch (gameStatus) {
-            case "XXXOOOOOO":
-                result = "X has won";
-                break;
+        if (game1.hasWon("X")) {
+            result = game1.getPlayer1() + " won!";
         }
 
+        if (game1.hasWon("O")) {
+            result = game1.getPlayer2() + " won!";
+        }
 
-        game.setResult(result);
-        gameDao.update(game);
+        game1.setResult(result);
 
+        gameDao.update(game1);
 
-
-
-        request.getSession().setAttribute("game", game);
+        request.getSession().setAttribute("game", game1);
+        request.getSession().setAttribute("gameStatus", game1.getGameStatus());
         request.getSession().setAttribute("result", result);
 
-        System.out.println("post test");
         System.out.println(game.getGameStatus());
+
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/game.jsp");
         rd.forward(request, response);
 
@@ -47,6 +49,7 @@ public class GameMoveServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Cookie[] cookies = request.getCookies();
+        int game_id = 0;
 
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("game_id")) {
@@ -66,10 +69,13 @@ public class GameMoveServlet extends HttpServlet {
 
         int cell = Integer.parseInt(request.getParameter("cell"));
         System.out.println(cell);
-        if (player.substring(0, 1).equals("X")) {
+
+        if (player.substring(0, 1).equals("X") && (game.isTurnX(game.getGameStatus()))) {
             game.drawX(cell);
-        } else if (player.substring(0, 1).equals("O")) {
-            game.drawO(cell);
+        }
+
+        if (player.substring(0, 1).equals("O") && (game.isTurnO(game.getGameStatus()))) {
+                game.drawO(cell);
         }
 
         gameDao.update(game);

@@ -1,4 +1,5 @@
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "GAMES")
@@ -45,6 +46,10 @@ public class Game {
         return gameStatus;
     }
 
+    public void setGameStatus(String gameStatus) {
+        this.gameStatus = gameStatus;
+    }
+
     public String getPlayer1() {
         return player1;
     }
@@ -53,8 +58,16 @@ public class Game {
         return player2;
     }
 
+    public void setPlayer2(String player2) {
+        this.player2 = player2;
+    }
+
     public String getResult() {
         return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     @Override
@@ -69,11 +82,52 @@ public class Game {
         return sb.toString();
     }
 
-    public void setPlayer2(String player2) {
-        this.player2 = player2;
+    public boolean hasWon(String player) {
+        int[][] results = Results.ARRAY.getArray();
+        int count = 0;
+        int len = results.length;
+        String[] array = gameStatus.split("");
+
+        for (int i = 0; i < len; i++) {
+            for (int j : results[i]) {
+                if (array[j].equals(player)) {
+                    count++;
+                    if (count == 3)
+                        return true;
+                }
+            }
+            count = 0;
+        }
+        return false;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public boolean isTurnX(String gameStatus) {
+        int count = 0;
+
+        for (String s : gameStatus.split("")) {
+            if (s.equals(" "))
+                count++;
+        }
+
+        if (count % 2 == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isTurnO(String gameStatus) {
+        int count = 0;
+
+        for (String s : gameStatus.split("")) {
+            if (s.equals(" "))
+                count++;
+        }
+
+        if (count % 2 == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

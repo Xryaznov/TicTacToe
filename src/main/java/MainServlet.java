@@ -10,33 +10,29 @@ public class MainServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-        Cookie[] cookies = request.getCookies();
-
         String name1 = request.getParameter("name");
 
-
         GameDaoImpl gameDao = new GameDaoImpl();
-        Game game = new Game(name1);
 
-        gameDao.save(game);
+            Game game = new Game(name1);
+            gameDao.save(game);
+            Cookie cookie1 = new Cookie("game_id", String.valueOf(gameDao.getLastId()));
+            Cookie cookie2 = new Cookie("player", "X" + name1);
 
-        String gameStatus = game.getGameStatus();
+            cookie1.setMaxAge(60 * 60);
+            response.addCookie(cookie1);
 
-        Cookie cookie1 = new Cookie("game_id", String.valueOf(gameDao.getLastId()));
-        Cookie cookie2 = new Cookie("player", "X" + name1);
+            cookie2.setMaxAge(60 * 60);
+            response.addCookie(cookie2);
 
-        cookie1.setMaxAge(60 * 60);
-        response.addCookie(cookie1);
+            request.getSession().setAttribute("name1", name1);
+            request.getSession().setAttribute("game", game);
 
-        cookie2.setMaxAge(60 * 60);
-        response.addCookie(cookie2);
+
+        System.out.println("MainServlet");
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/game.jsp");
-        request.getSession().setAttribute("name1", name1);
-        request.getSession().setAttribute("game", game);
-        request.getSession().setAttribute("gameStatus", gameStatus);
         rd.forward(request, response);
-        }
     }
+}
 
