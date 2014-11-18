@@ -9,8 +9,8 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             Configuration configuration = new Configuration();
-            configuration.configure("hibernate-local.cfg.xml");
-            //configuration.configure("hibernate-heroku.cfg.xml");
+            //configuration.configure("hibernate-local.cfg.xml");
+            configuration.configure("hibernate-heroku.cfg.xml");
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             return configuration.buildSessionFactory(serviceRegistry);
         } catch (Throwable ex) {
