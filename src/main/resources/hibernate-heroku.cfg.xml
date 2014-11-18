@@ -30,6 +30,9 @@
         <!-- Echo all executed SQL to stdout -->
         <property name="show_sql">true</property>
 
+        <property name="hibernate.connection.characterEncoding">utf8</property>
+
+
         <!-- Drop and re-save the database schema on startup -->
         <property name="hbm2ddl.auto">update</property>
 

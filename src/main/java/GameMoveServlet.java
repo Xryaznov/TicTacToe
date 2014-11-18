@@ -21,8 +21,6 @@ public class GameMoveServlet extends HttpServlet {
         GameDaoImpl gameDao = new GameDaoImpl();
         Game game1 = gameDao.getById(game_id);
 
-        System.out.println(game1 == null);
-
         if (game1.hasWon("X")) {
             result = game1.getPlayer1() + " won!";
         }
