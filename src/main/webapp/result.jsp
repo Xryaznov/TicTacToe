@@ -32,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="tictactoe-project.herokuapp.com">Tic Tac Toe</a>
+            <a class="navbar-brand" href="http://tictactoe-project.herokuapp.com">Tic Tac Toe</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
