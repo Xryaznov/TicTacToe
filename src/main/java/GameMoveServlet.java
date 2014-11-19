@@ -8,6 +8,7 @@ import java.io.IOException;
 
 public class GameMoveServlet extends HttpServlet {
     private String player;
+    private String result;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -16,31 +17,58 @@ public class GameMoveServlet extends HttpServlet {
         System.out.println("GameMoveServlet");
         int game_id = game.getGame_id();
 
-        String result = "in progress";
 
         GameDaoImpl gameDao = new GameDaoImpl();
         Game game1 = gameDao.getById(game_id);
 
         if (game1.hasWon("X")) {
             result = game1.getPlayer1() + " won!";
+
+            game1.setResult(result);
+            gameDao.update(game1);
+
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
+            request.getSession().setAttribute("result", result);
+
+            if (!response.isCommitted())
+                rd.forward(request, response);
         }
 
         if (game1.hasWon("O")) {
             result = game1.getPlayer2() + " won!";
+
+            game1.setResult(result);
+            gameDao.update(game1);
+
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
+            request.getSession().setAttribute("result", result);
+
+            if (!response.isCommitted())
+                rd.forward(request, response);
         }
 
-        game1.setResult(result);
+        if (game1.hasEnded()) {
+            result = "DRAW!";
 
-        gameDao.update(game1);
+            game1.setResult(result);
+            gameDao.update(game1);
+
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
+            request.getSession().setAttribute("result", result);
+
+            if (!response.isCommitted())
+                rd.forward(request, response);
+        }
 
         request.getSession().setAttribute("game", game1);
         request.getSession().setAttribute("gameStatus", game1.getGameStatus());
-        request.getSession().setAttribute("result", result);
+
 
         System.out.println(game.getGameStatus());
 
         RequestDispatcher rd = getServletContext().getRequestDispatcher("/game.jsp");
-        rd.forward(request, response);
+        if (!response.isCommitted())
+            rd.forward(request, response);
 
     }
 
@@ -73,7 +101,7 @@ public class GameMoveServlet extends HttpServlet {
         }
 
         if (player.substring(0, 1).equals("O") && (game.isTurnO(game.getGameStatus()))) {
-                game.drawO(cell);
+            game.drawO(cell);
         }
 
         gameDao.update(game);

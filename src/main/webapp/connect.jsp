@@ -31,13 +31,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="tictactoe-project.herokuapp.com">Tic Tac Toe</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active"><a href="/show">Results</a></li>
+                <li><a href="https://github.com/Xryaznov/TicTacToe" target="_blank">GitHub</a></li>
+                <li><a href="mailto:xryaznov@gmail.com">Contact</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -50,7 +50,7 @@
 <div class="starter-template">
 <h1>TIC TAC TOE</h1>
     <form>
-        <input type="text" name="name2">
+        <input type="text" name="name2" placeholder="Enter name">
         <input type="submit" formaction="/connect" formmethod="post">
     </form>
 <div class="starter-template img-responsive center-block">

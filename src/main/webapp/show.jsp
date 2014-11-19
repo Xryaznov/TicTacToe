@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
     <title>Tic Tac Toe</title>
 </head>
@@ -44,41 +45,47 @@
     </div>
 </nav>
 
-<div class="container">
-<div class="starter-template">
-<h1>TIC TAC TOE</h1>
-    <form>
-        <input type="text" name="name" placeholder="Enter name">
-        <input type="submit" formaction="/main" formmethod="get">
-    </form>
-<div class="starter-template img-responsive center-block">
 
-    </div>
-    <%--table class="table" style="width: 150px">
-    <tbody>--%>
-<%--<tr>--%>
-<%--<td>1</td>--%>
-<%--<td>2</td>--%>
-<%--<td>3</td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>1</td>--%>
-<%--<td>2</td>--%>
-<%--<td>3</td>--%>
-<%--</tr>--%>
-<%--<tr>--%>
-<%--<td>1</td>--%>
-<%--<td>2</td>--%>
-<%--<td id='9'>3</td>--%>
-<%--</tr>--%>
-<%--</tbody>--%>
-<%--</table>--%>
-<%--</div>--%>
-<%--</div>--%>
+<style>
 
-<%--</div>--%>
+    .table tbody tr td {
+        border-top: solid gainsboro 1px;
+    }
 
-<%--<input type="submit" formaction="/index" formmethod="get">--%>
+
+</style>
+
+<div class="starter-template container">
+        <table class="table" style="width: 400px;">
+            <thead>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Game</td>
+                <td>Player 1</td>
+                <td>Player 2</td>
+                <td>Result</td>
+            </tr>
+
+            <c:forEach var="game" items="${history}">
+                <tr>
+                    <td>
+                        <c:out value="${game.game_id}"></c:out>
+                    </td>
+                    <td>
+                        <c:out value="${game.player1}"></c:out>
+                    </td>
+                    <td>
+                        <c:out value="${game.player2}"></c:out>
+                    </td>
+                    <td>
+                        <c:out value="${game.result}"></c:out>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        </div>
 
 <style>
 
@@ -93,16 +100,6 @@
     }
 
 </style>
-
-<script>
-    $('td').click(function (event) {
-        var fieldNumber = $(this).attr('id');
-        alert(fieldNumber);
-        $.get("/", {field: fieldNumber});
-
-
-    });
-</script>
 
 </body>
 </html>

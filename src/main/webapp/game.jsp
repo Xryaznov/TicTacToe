@@ -32,13 +32,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="tictactoe-project.herokuapp.com">Tic Tac Toe</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li class="active"><a href="/show">Results</a></li>
+                <li><a href="https://github.com/Xryaznov/TicTacToe" target="_blank">GitHub</a></li>
+                <li><a href="mailto:xryaznov@gmail.com">Contact</a></li>
             </ul>
         </div>
         <!--/.nav-collapse -->
@@ -50,8 +50,8 @@
 
 
     .td {
-        height: 38px;
-        width: 52px;
+        height: 40px;
+        width: 40px;
         border-left: 1px solid black;
         border-right: 1px solid black;
         border-top: 1px solid black;
@@ -81,15 +81,16 @@
         <div class="starter-template">
             <h1>TIC TAC TOE</h1>
 
-
-            Game id: <c:out value="${game.game_id}"/>
+            <button class="btn-small"
+                    onclick="copyToClipboard('http://tictactoe-project.herokuapp.com/connect?${game.game_id}')">Invite
+                player
+            </button>
+            </br>
             </br>
             Player 1: <c:out value="${game.player1}"/>
             </br>
             Player 2: <c:out value="${game.player2}"/>
             </br>
-            Result: <c:out value="${result}"/>
-
 
             <div class="starter-template col-lg-6 col-lg-offset-5 text-center">
 
@@ -133,20 +134,36 @@
 
 </style>
 
+
 <script>
     $('td').click(function (event) {
         var fieldNumber = $(this).attr('id');
+
+        if (document.getElementById(fieldNumber).innerHTML == 'X') {
+            return;
+        }
+
+        if (document.getElementById(fieldNumber).innerHTML == 'O') {
+            return;
+        }
 
         $.get("/move", {cell: fieldNumber}).done(function () {
             $('#form').submit();
         });
     });
+
 </script>
 
 <script>
     setInterval(function () {
         $('#form').submit();
     }, 5000);
+</script>
+
+<script>
+    function copyToClipboard(text) {
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+    }
 </script>
 
 </body>

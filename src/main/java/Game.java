@@ -130,4 +130,10 @@ public class Game {
             return false;
         }
     }
+
+    public boolean hasEnded() {
+        if (!gameStatus.contains(" "))
+            return true;
+        return false;
+    }
 }
