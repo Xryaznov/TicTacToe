@@ -96,15 +96,6 @@
 
 </style>
 
-<script>
-    $('td').click(function (event) {
-        var fieldNumber = $(this).attr('id');
-        alert(fieldNumber);
-        $.get("/", {field: fieldNumber});
-
-
-    });
-</script>
 
 </body>
 </html>
