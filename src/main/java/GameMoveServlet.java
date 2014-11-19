@@ -29,7 +29,10 @@ public class GameMoveServlet extends HttpServlet {
 
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
             request.getSession().setAttribute("result", result);
-
+            for (Cookie c: request.getCookies()) {
+                c.setMaxAge(0);
+                response.addCookie(c);
+            }
             if (!response.isCommitted())
                 rd.forward(request, response);
         }
@@ -42,7 +45,10 @@ public class GameMoveServlet extends HttpServlet {
 
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
             request.getSession().setAttribute("result", result);
-
+            for (Cookie c: request.getCookies()) {
+                c.setMaxAge(0);
+                response.addCookie(c);
+            }
             if (!response.isCommitted())
                 rd.forward(request, response);
         }
@@ -55,7 +61,10 @@ public class GameMoveServlet extends HttpServlet {
 
             RequestDispatcher rd = getServletContext().getRequestDispatcher("/result.jsp");
             request.getSession().setAttribute("result", result);
-
+            for (Cookie c: request.getCookies()) {
+                c.setMaxAge(0);
+                response.addCookie(c);
+            }
             if (!response.isCommitted())
                 rd.forward(request, response);
         }
